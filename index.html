@@ -180,6 +180,115 @@
 </nav>
 
 <section class="hero">
+  <section class="hero">
+  <div class="hero-grid-bg"></div>
+  
+  <div class="mask-wrapper">
+    <video autoplay muted loop playsinline class="mask-video">
+      <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-flowing-neon-waves-33045-large.mp4" type="video/mp4">
+    </video>
+    
+    <h1 class="mask-text">
+      NEXUS<br><span class="outline-text">AGENCY</span>
+    </h1>
+  </div>
+
+  <div class="hero-footer-content">
+    <div style="font-family: var(--font-mono); color: var(--accent); margin-bottom: 10px;">✦ AI-NATIVE GROWTH ENGINE</div>
+    <p style="max-width: 450px; color: var(--muted); margin-bottom: 30px;">
+      We leverage advanced neural networks to scale your customer acquisition.
+    </p>
+    <a href="contact.html" class="btn-primary">START SCALING →</a>
+  </div>
+</section>
+
+<style>
+/* --- NEW MASKING STYLES --- */
+.mask-wrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.mask-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  /* This is the secret: it clips the video to the text below */
+  mix-blend-mode: screen; 
+}
+
+.mask-text {
+  font-family: var(--font-display);
+  font-size: clamp(100px, 18vw, 280px);
+  line-height: 0.8;
+  text-align: center;
+  background: #000; /* Must be black for the blend mode to work */
+  color: #fff;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  /* The "Say It Nicely" Zoom effect starts here */
+  transition: transform 0.1s ease-out;
+}
+
+.outline-text {
+  -webkit-text-stroke: 2px #fff;
+  color: transparent;
+}
+
+.hero-footer-content {
+  position: relative;
+  z-index: 10;
+  padding: 0 60px 60px;
+}
+
+/* Ensure the hero is a flex container for the footer */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+</style>
+
+<script>
+  // ADD THIS TO YOUR SCRIPT TAG
+  const maskText = document.querySelector('.mask-text');
+  
+  window.addEventListener('scroll', () => {
+    const scrollValue = window.scrollY;
+    // As you scroll down, the text scales up exactly like the Dribbble shot
+    const scale = 1 + (scrollValue * 0.003); 
+    const opacity = 1 - (scrollValue * 0.002);
+    
+    if (scale < 5) { // Stop scaling after a certain point
+      maskText.style.transform = `scale(${scale})`;
+      maskText.style.opacity = opacity;
+    }
+  });
+
+  // Optional: Mouse Move Interaction (Parallax)
+  window.addEventListener('mousemove', (e) => {
+    const x = (e.clientX - window.innerWidth / 2) * 0.01;
+    const y = (e.clientY - window.innerHeight / 2) * 0.01;
+    // Adds a slight "float" to the text as the mouse moves
+    maskText.style.left = `${x}px`;
+    maskText.style.top = `${y}px`;
+  });
+</script>
   <div class="hero-grid-bg"></div>
   <div class="hero-blob" id="blob1"></div>
   <div class="hero-blob2" id="blob2"></div>
