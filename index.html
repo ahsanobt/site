@@ -5,123 +5,105 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>NEXUS — AI Marketing Agency</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    
+
     :root {
       --bg: #080808;
+      --surface: #111111;
+      --border: rgba(255,255,255,0.08);
       --accent: #C8FF00;
-      --text: #ffffff;
-      --muted: rgba(255,255,255,0.4);
+      --accent2: #FF3C5F;
+      --text: #F0EDE6;
+      --muted: rgba(240,237,230,0.45);
       --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
       --font-mono: 'Space Mono', monospace;
     }
 
     body {
-      background: var(--bg);
+      background-color: var(--bg);
       color: var(--text);
-      font-family: 'DM Sans', sans-serif;
+      font-family: var(--font-body);
+      line-height: 1.5;
       overflow-x: hidden;
-      cursor: none; /* Custom cursor used instead */
+      cursor: none; /* Required for the custom circle badge */
     }
 
-    /* --- CIRCLE TEXT ANIMATION --- */
+    /* --- CIRCLE BADGE ANIMATION --- */
     #circle-badge {
       position: fixed;
-      width: 150px;
-      height: 150px;
+      width: 140px;
+      height: 140px;
       pointer-events: none;
-      z-index: 999;
-      transition: transform 0.15s ease-out;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
     }
-
     #circle-badge svg {
       width: 100%;
       height: 100%;
       animation: rotateCircle 10s linear infinite;
     }
-
     @keyframes rotateCircle {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
-
     #circle-badge text {
       font-family: var(--font-mono);
-      font-size: 14px;
+      font-size: 12px;
       fill: var(--accent);
       text-transform: uppercase;
-      letter-spacing: 3px;
+      letter-spacing: 2.5px;
     }
 
-    /* --- NAVIGATION --- */
+    /* NAVIGATION */
     nav {
-      position: fixed; top: 0; width: 100%; z-index: 1000;
+      position: fixed; top: 0; width: 100%; padding: 2rem 5%;
       display: flex; justify-content: space-between; align-items: center;
-      padding: 30px 5%; mix-blend-mode: difference;
+      z-index: 1000; transition: all 0.4s ease;
     }
-    .logo { font-family: var(--font-display); font-size: 2.5rem; color: var(--accent); text-decoration: none; }
-    .nav-links a { color: white; text-decoration: none; font-family: var(--font-mono); font-size: 0.7rem; margin-left: 30px; text-transform: uppercase; }
+    nav.scrolled {
+      padding: 1rem 5%; background: rgba(8,8,8,0.8); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-family: var(--font-display); font-size: 2rem; color: var(--accent); text-decoration: none; }
 
-    /* --- HERO --- */
+    /* HERO SECTION & "SAY IT NICELY" ANIMATION */
     .hero {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 0 5%;
-      position: relative;
+      height: 100vh; display: flex; flex-direction: column;
+      justify-content: center; padding: 0 5%; position: relative;
     }
-
-    .hero-tag {
-      font-family: var(--font-mono);
-      color: var(--accent);
-      font-size: 0.8rem;
-      margin-bottom: 20px;
-    }
-
-    .hero-headline {
-      font-family: var(--font-display);
-      font-size: clamp(5rem, 15vw, 12rem);
-      line-height: 0.85;
-      text-transform: uppercase;
+    .hero h1 {
+      font-family: var(--font-display); font-size: clamp(4rem, 10vw, 8rem);
+      line-height: 0.9; text-transform: uppercase;
     }
 
     .carousel-wrap {
-      height: 1.1em;
-      overflow: hidden;
-      display: inline-block;
-      vertical-align: bottom;
-      color: var(--accent);
+      height: 1.1em; overflow: hidden; display: inline-block; vertical-align: bottom; color: var(--accent);
     }
-
-    .carousel-inner {
-      animation: slideUp 8s cubic-bezier(0.85, 0, 0.15, 1) infinite;
-    }
-
-    .carousel-item { height: 1.1em; }
+    .carousel-inner { animation: slideUp 10s cubic-bezier(0.85, 0, 0.15, 1) infinite; }
+    .carousel-item { height: 1.1em; display: flex; align-items: center; }
 
     @keyframes slideUp {
-      0%, 20% { transform: translateY(0); }
-      25%, 45% { transform: translateY(-1.1em); }
-      50%, 70% { transform: translateY(-2.2em); }
-      75%, 95% { transform: translateY(-3.3em); }
-      100% { transform: translateY(-4.4em); }
+      0%, 15% { transform: translateY(0); }
+      20%, 35% { transform: translateY(-1.1em); }
+      40%, 55% { transform: translateY(-2.2em); }
+      60%, 75% { transform: translateY(-3.3em); }
+      80%, 95% { transform: translateY(-4.4em); }
+      100% { transform: translateY(-5.5em); }
     }
 
-    /* --- SECTIONS --- */
-    section { padding: 100px 5%; border-top: 1px solid rgba(255,255,255,0.1); }
-    .section-label { font-family: var(--font-mono); color: var(--accent); font-size: 0.7rem; margin-bottom: 20px; display: block; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 50px; }
-    .card { border: 1px solid rgba(255,255,255,0.1); padding: 40px; transition: 0.3s; }
-    .card:hover { border-color: var(--accent); background: #111; }
-    .card h3 { font-family: var(--font-display); font-size: 2.5rem; margin-bottom: 15px; }
+    /* GRID SECTIONS */
+    .section { padding: 100px 5%; border-top: 1px solid var(--border); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
+    .card { background: var(--surface); border: 1px solid var(--border); padding: 3rem; transition: 0.3s; }
+    .card:hover { border-color: var(--accent); }
+    .card h3 { font-family: var(--font-display); font-size: 2rem; margin-bottom: 1rem; }
 
-    /* --- UTILS --- */
-    .reveal { opacity: 0; transform: translateY(30px); transition: 1s cubic-bezier(0.16, 1, 0.3, 1); }
+    /* REVEAL ANIMATION */
+    .reveal { opacity: 0; transform: translateY(30px); transition: 1s ease-out; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
-
   </style>
 </head>
 <body>
@@ -129,95 +111,72 @@
   <div id="circle-badge">
     <svg viewBox="0 0 100 100">
       <path id="circlePath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="transparent"/>
-      <text>
-        <textPath xlink:href="#circlePath">
-          * NEXUS AI * MARKET SMARTER * SCALE FASTER * </textPath>
-      </text>
+      <text><textPath xlink:href="#circlePath">* NEXUS AI * MARKET SMARTER * SCALE FASTER *</textPath></text>
     </svg>
   </div>
 
-  <nav>
+  <nav id="navbar">
     <a href="#" class="logo">NEXUS</a>
-    <div class="nav-links">
-      <a href="#services">Services</a>
-      <a href="#work">Case Studies</a>
-      <a href="#contact">Contact</a>
-    </div>
   </nav>
 
   <section class="hero">
-    <div class="hero-tag">// ENGINE_STABLE // GEN_04</div>
-    <h1 class="hero-headline">
+    <h1 class="reveal">
       WE SCALE<br>
       <span class="carousel-wrap">
         <span class="carousel-inner">
           <div class="carousel-item">BRANDS</div>
           <div class="carousel-item">REVENUE</div>
+          <div class="carousel-item">STARTUPS</div>
           <div class="carousel-item">FUTURES</div>
           <div class="carousel-item">IDEAS</div>
           <div class="carousel-item">BRANDS</div>
         </span>
       </span>
     </h1>
-    <p style="max-width: 500px; margin-top: 40px; color: var(--muted); line-height: 1.8;">
-      We deploy advanced neural architectures to automate your market dominance. No guesswork, just pure mathematical growth.
-    </p>
+    <p class="reveal" style="max-width: 500px; margin-top: 2rem; color: var(--muted);">An AI-first creative powerhouse engineered to automate growth.</p>
   </section>
 
-  <section id="services">
-    <span class="section-label">Capabilities</span>
-    <h2 style="font-family: var(--font-display); font-size: 4rem;">Core Systems</h2>
+  <section id="services" class="section">
+    <h2 class="reveal" style="font-family: var(--font-display); font-size: 4rem;">Services</h2>
     <div class="grid">
-      <div class="card reveal">
-        <h3>Predictive Ads</h3>
-        <p>Algorithmic capital allocation that scales winning campaigns in real-time.</p>
-      </div>
-      <div class="card reveal">
-        <h3>Neural Brand</h3>
-        <p>Visual identities built using psychological data-points for instant trust.</p>
-      </div>
-      <div class="card reveal">
-        <h3>Auto-Growth</h3>
-        <p>Custom AI agents that handle lead generation and funnel optimization 24/7.</p>
-      </div>
+      <div class="card reveal"><h3>AI Strategy</h3><p>Custom models for market acquisition.</p></div>
+      <div class="card reveal"><h3>Media Buying</h3><p>Automated capital deployment.</p></div>
+      <div class="card reveal"><h3>Growth Ops</h3><p>Technical infrastructure for scaling.</p></div>
     </div>
   </section>
 
-  <section id="contact" style="background: var(--accent); color: black;">
-    <span class="section-label" style="color: black;">Inquiry</span>
-    <h2 style="font-family: var(--font-display); font-size: clamp(3rem, 10vw, 8rem); line-height: 0.9;">INITIATE_CONTACT</h2>
-    <p style="font-weight: bold; margin-top: 20px;">hello@nexus-ai.agency</p>
-  </section>
-
   <script>
-    // --- MOUSE FOLLOW CIRCLE ---
+    // Circle follows mouse
     const badge = document.getElementById('circle-badge');
     let mouseX = 0, mouseY = 0;
-    let badgeX = 0, badgeY = 0;
+    let bX = 0, bY = 0;
 
     document.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
     });
 
-    function animate() {
-      // Smooth movement (Lerp)
-      badgeX += (mouseX - badgeX - 75) * 0.1;
-      badgeY += (mouseY - badgeY - 75) * 0.1;
-      
-      badge.style.transform = `translate3d(${badgeX}px, ${badgeY}px, 0)`;
-      requestAnimationFrame(animate);
+    function move() {
+      bX += (mouseX - bX) * 0.1;
+      bY += (mouseY - bY) * 0.1;
+      badge.style.left = bX + 'px';
+      badge.style.top = bY + 'px';
+      requestAnimationFrame(move);
     }
-    animate();
+    move();
 
-    // --- REVEAL ON SCROLL ---
+    // Intersection Observer for reveals
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    // Navbar scroll
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 50) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    });
   </script>
 </body>
 </html>
