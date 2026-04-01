@@ -22,375 +22,308 @@
       --font-mono: 'Space Mono', monospace;
     }
 
-    html { scroll-behavior: smooth; }
-
     body {
-      background: var(--bg);
+      background-color: var(--bg);
       color: var(--text);
       font-family: var(--font-body);
-      font-size: 16px;
-      line-height: 1.6;
+      line-height: 1.5;
       overflow-x: hidden;
-      cursor: none; /* Custom cursor active */
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* CUSTOM CURSOR */
-    .cursor {
-      position: fixed; top: 0; left: 0; z-index: 9999;
+    /* CURSOR */
+    #cursor {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
       pointer-events: none;
-      transform: translate3d(0,0,0);
+      z-index: 9999;
+      transition: transform 0.1s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .cursor-dot {
-      width: 8px; height: 8px;
+    #cursor::after {
+      content: '';
+      width: 4px;
+      height: 4px;
       background: var(--accent);
       border-radius: 50%;
-      position: absolute;
-      transform: translate(-50%, -50%);
-    }
-    .cursor-ring {
-      width: 36px; height: 36px;
-      border: 1.5px solid var(--accent);
-      border-radius: 50%;
-      position: absolute;
-      transform: translate(-50%, -50%);
-      transition: width 0.3s, height 0.3s, opacity 0.3s;
-      opacity: 0.6;
-    }
-    
-    /* CURSOR INTERACTION */
-    .cursor-active .cursor-ring {
-      width: 60px; height: 60px;
-      opacity: 1;
-      background: rgba(200, 255, 0, 0.1);
     }
 
-    /* NAV */
+    /* NAVIGATION */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 24px 60px;
-      transition: all 0.4s;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 2rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      transition: all 0.4s ease;
     }
     nav.scrolled {
-      background: rgba(8,8,8,0.85);
-      backdrop-filter: blur(20px);
+      padding: 1rem 5%;
+      background: rgba(8,8,8,0.8);
+      backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border);
     }
-    .nav-logo {
+    .logo {
       font-family: var(--font-display);
-      font-size: 28px; letter-spacing: 0.12em;
-      color: var(--text); text-decoration: none;
+      font-size: 2rem;
+      letter-spacing: 2px;
+      color: var(--accent);
+      text-decoration: none;
     }
-    .nav-logo span { color: var(--accent); }
-    .nav-links { display: flex; gap: 40px; list-style: none; }
     .nav-links a {
-      font-family: var(--font-mono); font-size: 11px;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--muted); text-decoration: none; transition: color 0.2s;
+      color: var(--text);
+      text-decoration: none;
+      margin-left: 2.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: color 0.3s ease;
     }
     .nav-links a:hover { color: var(--accent); }
 
-    /* HERO */
+    /* HERO SECTION */
     .hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 0 60px 80px;
-      position: relative; overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 5%;
+      position: relative;
+      overflow: hidden;
     }
-    .hero-grid-bg {
-      position: absolute; inset: 0;
-      background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 80px 80px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
-    }
-    .hero-blob, .hero-blob2 {
-      position: absolute; border-radius: 50%;
+
+    .hero-bg-blobs {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1;
       filter: blur(80px);
-      transition: transform 0.2s ease-out; /* Live follow effect */
-      pointer-events: none;
+      opacity: 0.4;
     }
-    .hero-blob {
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(200,255,0,0.15) 0%, transparent 70%);
-      top: -100px; right: -100px;
+    .blob {
+      position: absolute;
+      width: 40vw;
+      height: 40vw;
+      border-radius: 50%;
     }
-    .hero-blob2 {
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(255,60,95,0.1) 0%, transparent 70%);
-      bottom: 100px; left: -80px;
+    .blob-1 { background: var(--accent); top: -10%; left: -10%; animation: float 20s infinite alternate; }
+    .blob-2 { background: var(--accent2); bottom: -10%; right: -10%; animation: float 25s infinite alternate-reverse; }
+
+    @keyframes float {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(10%, 10%) rotate(15deg); }
     }
 
-    .hero-headline {
+    /* TEXT CAROUSEL ANIMATION (Say It Nicely Style) */
+    .hero h1 {
       font-family: var(--font-display);
-      font-size: clamp(72px, 11vw, 160px);
-      line-height: 0.92; margin-bottom: 48px;
+      font-size: clamp(4rem, 10vw, 8rem);
+      line-height: 0.9;
+      text-transform: uppercase;
+      display: flex;
+      flex-direction: column;
     }
-    .hero-headline .line2 { color: var(--accent); }
-    .hero-headline .outline { -webkit-text-stroke: 1.5px rgba(240,237,230,0.3); color: transparent; }
 
-    /* SERVICE CARDS - 3D PREP */
-    .services-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 20px; padding: 60px;
+    .carousel-container {
+      height: 1.1em; /* Matches line height of text */
+      overflow: hidden;
+      display: inline-block;
+      position: relative;
+      color: var(--accent);
     }
-    .service-card {
-      background: var(--surface);
-      padding: 40px; border: 1px solid var(--border);
-      transition: transform 0.1s ease-out, background 0.3s;
-      transform-style: preserve-3d;
-      perspective: 1000px;
+
+    .carousel-list {
+      display: flex;
+      flex-direction: column;
+      animation: rotateText 10s cubic-bezier(0.76, 0, 0.24, 1) infinite;
     }
-    .service-card:hover { background: #161616; border-color: var(--accent); }
-    .service-card h3 { font-family: var(--font-display); font-size: 28px; margin: 20px 0; }
 
-    /* TICKER */
-    .ticker-wrap { background: var(--accent); padding: 15px 0; overflow: hidden; }
-    .ticker { display: flex; animation: ticker 30s linear infinite; white-space: nowrap; }
-    .ticker span { font-family: var(--font-display); font-size: 20px; color: #000; padding: 0 40px; }
-    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .carousel-item {
+      height: 1.1em;
+      display: flex;
+      align-items: center;
+    }
 
+    @keyframes rotateText {
+      0%, 15% { transform: translateY(0); }
+      20%, 35% { transform: translateY(-1.1em); }
+      40%, 55% { transform: translateY(-2.2em); }
+      60%, 75% { transform: translateY(-3.3em); }
+      80%, 95% { transform: translateY(-4.4em); }
+      100% { transform: translateY(-5.5em); }
+    }
+
+    .hero p {
+      max-width: 500px;
+      margin-top: 2rem;
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+
+    .cta-row {
+      margin-top: 3rem;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
     .btn-primary {
-      background: var(--accent); color: #000; padding: 18px 40px;
-      font-family: var(--font-mono); font-weight: 700; text-decoration: none;
-      display: inline-block; transition: 0.3s;
+      background: var(--accent);
+      color: #000;
+      padding: 1.2rem 2.5rem;
+      text-decoration: none;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      border: 1px solid var(--accent);
     }
-    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(200,255,0,0.2); }
+    .btn-primary:hover { background: transparent; color: var(--accent); }
 
-    @media (max-width: 1024px) {
-      .services-grid { grid-template-columns: 1fr 1fr; padding: 20px; }
-      body { cursor: auto; } .cursor { display: none; }
+    /* SERVICES */
+    .services { padding: 10rem 5%; }
+    .section-tag {
+      font-family: var(--font-mono);
+      color: var(--accent);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 3rem;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover { border-color: var(--accent); transform: translateY(-10px); }
+    .card h3 { font-family: var(--font-display); font-size: 2rem; margin-bottom: 1rem; }
+    .card p { color: var(--muted); }
+
+    /* REVEAL ANIMATION */
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* FOOTER */
+    footer {
+      padding: 5rem 5%;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-family: var(--font-mono);
+      color: var(--muted);
+      font-size: 0.7rem;
     }
   </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor">
-  <div class="cursor-dot"></div>
-  <div class="cursor-ring"></div>
-</div>
+  <div id="cursor"></div>
 
-<nav id="nav">
-  <a href="#" class="nav-logo">NEX<span>U</span>S</a>
-  <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#work">Work</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-  <a href="contact.html" class="btn-primary" style="padding: 10px 20px; font-size: 12px;">Get Started</a>
-</nav>
+  <nav id="navbar">
+    <a href="#" class="logo">NEXUS</a>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
 
-<section class="hero">
   <section class="hero">
-  <div class="hero-grid-bg"></div>
-  
-  <div class="mask-wrapper">
-    <video autoplay muted loop playsinline class="mask-video">
-      <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-flowing-neon-waves-33045-large.mp4" type="video/mp4">
-    </video>
+    <div class="hero-bg-blobs">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+    </div>
     
-    <h1 class="mask-text">
-      NEXUS<br><span class="outline-text">AGENCY</span>
+    <h1 class="reveal">
+      <span>WE SCALE</span>
+      <div class="carousel-container">
+        <div class="carousel-list">
+          <div class="carousel-item">BRANDS</div>
+          <div class="carousel-item">REVENUE</div>
+          <div class="carousel-item">STARTUPS</div>
+          <div class="carousel-item">FUTURES</div>
+          <div class="carousel-item">IDEAS</div>
+          <div class="carousel-item">BRANDS</div>
+        </div>
+      </div>
     </h1>
-  </div>
 
-  <div class="hero-footer-content">
-    <div style="font-family: var(--font-mono); color: var(--accent); margin-bottom: 10px;">✦ AI-NATIVE GROWTH ENGINE</div>
-    <p style="max-width: 450px; color: var(--muted); margin-bottom: 30px;">
-      We leverage advanced neural networks to scale your customer acquisition.
-    </p>
-    <a href="contact.html" class="btn-primary">START SCALING →</a>
-  </div>
-</section>
-
-<style>
-/* --- NEW MASKING STYLES --- */
-.mask-wrapper {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  z-index: 2;
-}
-
-.mask-video {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  min-width: 100%;
-  min-height: 100%;
-  object-fit: cover;
-  /* This is the secret: it clips the video to the text below */
-  mix-blend-mode: screen; 
-}
-
-.mask-text {
-  font-family: var(--font-display);
-  font-size: clamp(100px, 18vw, 280px);
-  line-height: 0.8;
-  text-align: center;
-  background: #000; /* Must be black for the blend mode to work */
-  color: #fff;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  user-select: none;
-  /* The "Say It Nicely" Zoom effect starts here */
-  transition: transform 0.1s ease-out;
-}
-
-.outline-text {
-  -webkit-text-stroke: 2px #fff;
-  color: transparent;
-}
-
-.hero-footer-content {
-  position: relative;
-  z-index: 10;
-  padding: 0 60px 60px;
-}
-
-/* Ensure the hero is a flex container for the footer */
-.hero {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-</style>
-
-<script>
-  // ADD THIS TO YOUR SCRIPT TAG
-  const maskText = document.querySelector('.mask-text');
-  
-  window.addEventListener('scroll', () => {
-    const scrollValue = window.scrollY;
-    // As you scroll down, the text scales up exactly like the Dribbble shot
-    const scale = 1 + (scrollValue * 0.003); 
-    const opacity = 1 - (scrollValue * 0.002);
+    <p class="reveal">An AI-first creative powerhouse engineered to automate growth and dominate the digital landscape.</p>
     
-    if (scale < 5) { // Stop scaling after a certain point
-      maskText.style.transform = `scale(${scale})`;
-      maskText.style.opacity = opacity;
-    }
-  });
-
-  // Optional: Mouse Move Interaction (Parallax)
-  window.addEventListener('mousemove', (e) => {
-    const x = (e.clientX - window.innerWidth / 2) * 0.01;
-    const y = (e.clientY - window.innerHeight / 2) * 0.01;
-    // Adds a slight "float" to the text as the mouse moves
-    maskText.style.left = `${x}px`;
-    maskText.style.top = `${y}px`;
-  });
-</script>
-  <div class="hero-grid-bg"></div>
-  <div class="hero-blob" id="blob1"></div>
-  <div class="hero-blob2" id="blob2"></div>
-
-  <div style="font-family: var(--font-mono); color: var(--accent); margin-bottom: 20px;">✦ AI-NATIVE GROWTH ENGINE</div>
-  <h1 class="hero-headline">
-    <div>MARKET</div>
-    <div class="line2">SMARTER.</div>
-    <div class="outline">GROW FASTER.</div>
-  </h1>
-  <div style="max-width: 500px; color: var(--muted); margin-bottom: 40px;">
-    We leverage advanced neural networks to scale your customer acquisition while reducing operational drag.
-  </div>
-  <a href="contact.html" class="btn-primary">START SCALING →</a>
-</section>
-
-<div class="ticker-wrap">
-  <div class="ticker">
-    <span>AI STRATEGY</span><span>✦</span><span>PAID MEDIA</span><span>✦</span><span>PREDICTIVE ANALYTICS</span><span>✦</span><span>CONTENT ENGINE</span><span>✦</span>
-    <span>AI STRATEGY</span><span>✦</span><span>PAID MEDIA</span><span>✦</span><span>PREDICTIVE ANALYTICS</span><span>✦</span><span>CONTENT ENGINE</span><span>✦</span>
-  </div>
-</div>
-
-<section id="services">
-  <div style="text-align: center; margin-bottom: 60px;">
-    <h2 style="font-family: var(--font-display); font-size: 60px;">OUR SERVICES</h2>
-  </div>
-  <div class="services-grid">
-    <div class="service-card">
-      <div style="color: var(--accent); font-family: var(--font-mono);">01</div>
-      <h3>AI-POWERED ADS</h3>
-      <p>Real-time machine learning models that optimize your ROAS across Meta, Google, and TikTok automatically.</p>
+    <div class="cta-row reveal">
+      <a href="#contact" class="btn-primary">Start a Project</a>
     </div>
-    <div class="service-card">
-      <div style="color: var(--accent); font-family: var(--font-mono);">02</div>
-      <h3>PREDICTIVE ANALYTICS</h3>
-      <p>Identify high-value leads before they convert. We turn data into crystal balls for your revenue growth.</p>
-    </div>
-    <div class="service-card">
-      <div style="color: var(--accent); font-family: var(--font-mono);">03</div>
-      <h3>AUTOMATED CONTENT</h3>
-      <p>Generate high-converting creative assets at scale using proprietary AI training models tailored to your brand.</p>
-    </div>
-  </div>
-</section>
+  </section>
 
-<script>
-  const cursor = document.getElementById('cursor');
-  const blob1 = document.getElementById('blob1');
-  const blob2 = document.getElementById('blob2');
-  const nav = document.getElementById('nav');
-
-  // 1. SMOOTH CURSOR & INTERACTIVE BLOBS
-  window.addEventListener('mousemove', (e) => {
-    const { clientX, clientY } = e;
+  <section id="services" class="services">
+    <span class="section-tag reveal">Capabilities</span>
+    <h2 class="reveal" style="font-family: var(--font-display); font-size: 4rem;">Integrated AI Solutions</h2>
     
-    // Move Cursor
-    cursor.style.transform = `translate3d(${clientX}px, ${clientY}px, 0)`;
+    <div class="grid">
+      <div class="card reveal">
+        <h3>Predictive Ads</h3>
+        <p>Using machine learning to forecast campaign performance before you spend a single dollar.</p>
+      </div>
+      <div class="card reveal">
+        <h3>Neuro-Design</h3>
+        <p>Visual assets designed specifically to trigger high-conversion psychological responses.</p>
+      </div>
+      <div class="card reveal">
+        <h3>Auto-Scaling</h3>
+        <p>AI agents that manage your budget 24/7, shifting capital to the highest-performing channels.</p>
+      </div>
+    </div>
+  </section>
 
-    // Move Blobs (Parallax effect)
-    const moveX = (clientX - window.innerWidth / 2) * 0.05;
-    const moveY = (clientY - window.innerHeight / 2) * 0.05;
-    blob1.style.transform = `translate(${moveX}px, ${moveY}px)`;
-    blob2.style.transform = `translate(${-moveX}px, ${-moveY}px)`;
-  });
+  <footer>
+    &copy; 2026 NEXUS CREATIVE TECH. ALL RIGHTS RESERVED.
+  </footer>
 
-  // 2. CURSOR HOVER STATES
-  document.querySelectorAll('a, button, .service-card').forEach(link => {
-    link.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
-    link.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
-  });
-
-  // 3. 3D TILT EFFECT FOR CARDS
-  document.querySelectorAll('.service-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      
-      const rotateX = ((y - centerY) / centerY) * -15; // Max 15 degree tilt
-      const rotateY = ((x - centerX) / centerX) * 15;
-      
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+  <script>
+    // CUSTOM CURSOR
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
     });
 
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+    // NAV SCROLL EFFECT
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
     });
-  });
 
-  // 4. NAVBAR SCROLL EFFECT
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      nav.classList.add('scrolled');
-    } else {
-      nav.classList.remove('scrolled');
-    }
-  });
-</script>
+    // REVEAL ON SCROLL
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
 
+    reveals.forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
