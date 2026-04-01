@@ -3,240 +3,213 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NEXUS — AI Marketing Agency</title>
+  <title>SYSTEM_FAILURE // NEXUS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+    
     :root {
-      --bg: #050505;
-      --surface: #0f0f0f;
-      --border: rgba(255,255,255,0.08);
+      --bg: #030303;
+      --glitch-red: #ff003c;
+      --glitch-blue: #00f0ff;
       --accent: #C8FF00;
-      --text: #F0EDE6;
-      --muted: rgba(240,237,230,0.5);
+      --text: #ffffff;
       --font-display: 'Bebas Neue', sans-serif;
-      --font-body: 'DM Sans', sans-serif;
       --font-mono: 'Space Mono', monospace;
     }
 
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: var(--font-body);
+      font-family: var(--font-mono);
       overflow-x: hidden;
-      line-height: 1.6;
+      line-height: 1.2;
     }
 
-    /* NAV */
+    /* SCREEN STATIC OVERLAY */
+    body::before {
+      content: "";
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0) 1px, rgba(255,255,255,0) 2px);
+      pointer-events: none; z-index: 9999;
+    }
+
+    /* GLITCH ANIMATION */
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-3px, 2px); }
+      40% { transform: translate(-3px, -2px); }
+      60% { transform: translate(3px, 2px); }
+      80% { transform: translate(3px, -2px); }
+      100% { transform: translate(0); }
+    }
+
+    /* NAV - BROKEN ALIGNMENT */
     nav {
       position: fixed; top: 0; width: 100%; z-index: 1000;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 25px 5%; transition: 0.4s;
+      display: flex; justify-content: space-between; align-items: flex-start;
+      padding: 20px; mix-blend-mode: difference;
     }
-    nav.scrolled {
-      background: rgba(5,5,5,0.8); backdrop-filter: blur(20px);
-      padding: 15px 5%; border-bottom: 1px solid var(--border);
-    }
-    .logo { font-family: var(--font-display); font-size: 2rem; color: var(--text); text-decoration: none; }
-    .logo span { color: var(--accent); }
-    .nav-links { display: flex; gap: 30px; }
-    .nav-links a { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: 0.3s; }
-    .nav-links a:hover { color: var(--accent); }
+    .logo { font-family: var(--font-display); font-size: 3rem; color: var(--accent); text-decoration: line-through; }
+    .nav-links { transform: rotate(-5deg); background: var(--glitch-red); padding: 5px; }
+    .nav-links a { color: black; text-decoration: none; font-weight: bold; margin: 0 10px; font-size: 0.8rem; }
 
-    /* HERO */
+    /* HERO - FRAGMENTED */
     .hero {
-      height: 100vh; display: flex; flex-direction: column; align-items: center;
-      justify-content: center; text-align: center; padding: 0 5%;
+      height: 100vh; display: flex; flex-direction: column; 
+      justify-content: center; padding: 0 10%; position: relative;
     }
-    .hero-tag { font-family: var(--font-mono); color: var(--accent); font-size: 0.75rem; margin-bottom: 1.5rem; }
-    .hero-headline { font-family: var(--font-display); font-size: clamp(4.5rem, 12vw, 10rem); line-height: 0.85; margin-bottom: 2rem; }
+    .glitch-header {
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 18vw, 15rem);
+      line-height: 0.8;
+      position: relative;
+      animation: glitch 0.3s infinite;
+      text-shadow: 2px 0 var(--glitch-red), -2px 0 var(--glitch-blue);
+    }
+
+    .carousel-container {
+      display: block;
+      background: var(--text);
+      color: var(--bg);
+      padding: 0 20px;
+      width: fit-content;
+      transform: skewX(-15deg);
+    }
+
+    /* DAMAGED SECTIONS */
+    section { 
+        padding: 100px 5%; 
+        border: 2px solid var(--glitch-red);
+        margin: 50px;
+        position: relative;
+    }
     
-    .carousel-wrap { height: 1.1em; overflow: hidden; display: block; color: var(--accent); }
-    .carousel-inner { animation: slideUp 10s cubic-bezier(0.85, 0, 0.15, 1) infinite; }
-    .carousel-item { height: 1.1em; }
-
-    @keyframes slideUp {
-      0%, 15% { transform: translateY(0); }
-      20%, 35% { transform: translateY(-1.1em); }
-      40%, 55% { transform: translateY(-2.2em); }
-      60%, 75% { transform: translateY(-3.3em); }
-      80%, 95% { transform: translateY(-4.4em); }
-      100% { transform: translateY(-5.5em); }
+    .section-title { 
+        font-family: var(--font-display); 
+        font-size: 5rem; 
+        background: var(--accent); 
+        color: black; 
+        display: inline-block; 
+        transform: rotate(2deg);
+        margin-bottom: 40px;
     }
 
-    /* SECTIONS GENERAL */
-    section { padding: 120px 5%; border-bottom: 1px solid var(--border); }
-    .section-title { font-family: var(--font-display); font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 50px; }
-    .label { font-family: var(--font-mono); color: var(--accent); font-size: 0.7rem; text-transform: uppercase; display: block; margin-bottom: 10px; }
-
-    /* SERVICES GRID */
-    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1px; background: var(--border); }
-    .service-card { background: var(--bg); padding: 60px 40px; transition: 0.4s; }
-    .service-card:hover { background: var(--surface); }
-    .service-card h3 { font-family: var(--font-display); font-size: 2rem; margin-bottom: 15px; }
-    .service-card p { color: var(--muted); font-size: 0.9rem; }
-
-    /* CASE STUDIES */
-    .case-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
-    .case-item { position: relative; height: 500px; background: #1a1a1a; overflow: hidden; }
-    .case-overlay { 
-        position: absolute; bottom: 0; padding: 40px; width: 100%; 
-        background: linear-gradient(transparent, rgba(0,0,0,0.8)); 
+    /* GRID - UNEVEN & DISTORTED */
+    .grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr 1fr;
+      gap: 20px;
+    }
+    .card {
+      border: 1px solid var(--text);
+      padding: 30px;
+      transition: 0.1s;
+    }
+    .card:hover {
+      background: var(--glitch-blue);
+      color: black;
+      transform: scale(1.05) rotate(-2deg);
     }
 
-    /* PROCESS STEPS */
-    .process-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
-    .step-num { font-family: var(--font-display); font-size: 3rem; color: var(--accent); opacity: 0.3; }
-
-    /* CONTACT FORM */
-    .contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
-    input, textarea {
-      width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--border);
-      padding: 20px 0; color: white; font-family: var(--font-body); margin-bottom: 30px; outline: none;
+    /* CONTACT - RAW INPUTS */
+    .contact-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-width: 500px;
     }
-    input:focus { border-color: var(--accent); }
-    .submit-btn { 
-      background: var(--accent); color: black; border: none; padding: 20px 40px; 
-      font-family: var(--font-mono); font-weight: 700; cursor: pointer; text-transform: uppercase;
+    input {
+        background: transparent;
+        border: 1px solid var(--accent);
+        padding: 15px;
+        color: var(--accent);
+        font-family: var(--font-mono);
     }
 
-    /* ANIMATIONS */
-    .reveal { opacity: 0; transform: translateY(40px); transition: 1s cubic-bezier(0.17, 0.67, 0.83, 0.67); }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+    /* DISTORTION ELEMENTS */
+    .noise-block {
+        position: absolute;
+        background: white;
+        height: 100px;
+        width: 5px;
+        top: 20%; right: 5%;
+        animation: glitch 0.1s infinite;
+    }
 
-    @media (max-width: 900px) {
-      .contact-container, .process-row, .case-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
+    @media (max-width: 800px) {
+        .grid { grid-template-columns: 1fr; }
+        .glitch-header { font-size: 4rem; }
     }
   </style>
 </head>
 <body>
 
-  <nav id="navbar">
-    <a href="#" class="logo">NEX<span>U</span>S</a>
+  <nav>
+    <div class="logo">NEXUS_ERR</div>
     <div class="nav-links">
-      <a href="#services">Services</a>
-      <a href="#work">Case Studies</a>
-      <a href="#process">Process</a>
-      <a href="#contact">Contact</a>
+      <a href="#0">SYS.SRC</a>
+      <a href="#0">VOID.NULL</a>
+      <a href="#0">TERMINAL</a>
     </div>
   </nav>
 
+  <div class="noise-block"></div>
+
   <section class="hero">
-    <span class="hero-tag">// NEXT GEN MARKETING SYSTEMS</span>
-    <h1 class="hero-headline">
-      WE SCALE<br>
-      <span class="carousel-wrap">
-        <span class="carousel-inner">
-          <span class="carousel-item">BRANDS</span>
-          <span class="carousel-item">REVENUE</span>
-          <span class="carousel-item">STARTUPS</span>
-          <span class="carousel-item">SYSTEMS</span>
-          <span class="carousel-item">FUTURES</span>
-          <span class="carousel-item">BRANDS</span>
-        </span>
-      </span>
+    <p style="color: var(--glitch-red);">[CRITICAL_FAILURE: REBOOT_REQUIRED]</p>
+    <h1 class="glitch-header">
+      WE_VOID<br>
+      <span class="carousel-container">SYSTEMS</span>
     </h1>
+    <p style="max-width: 400px; margin-top: 20px; font-size: 0.7rem; border-left: 5px solid var(--glitch-blue); padding-left: 10px;">
+      ERROR: Agency.exe has stopped working. Intelligence is now artificial. Data is bleeding.
+    </p>
   </section>
 
   <section id="services">
-    <span class="label">Capabilities</span>
-    <h2 class="section-title">Our Expertise</h2>
-    <div class="services-grid">
-      <div class="service-card reveal">
-        <h3>01 / AI Strategy</h3>
-        <p>Custom machine learning models tailored to your specific market acquisition goals.</p>
+    <h2 class="section-title">BROKEN_LOGIC</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>0x01</h3>
+        <p>DATA_CORRUPTION_MARKETING</p>
       </div>
-      <div class="service-card reveal">
-        <h3>02 / Media Buying</h3>
-        <p>Automated capital deployment across high-intent channels for maximum ROAS.</p>
+      <div class="card" style="margin-top: 40px; border-color: var(--glitch-red);">
+        <h3>0x02</h3>
+        <p>NEURAL_GHOST_DESIGN</p>
       </div>
-      <div class="service-card reveal">
-        <h3>03 / Growth Ops</h3>
-        <p>Technical infrastructure built to handle rapid scaling without system friction.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="work">
-    <span class="label">Portfolio</span>
-    <h2 class="section-title">Selected Work</h2>
-    <div class="case-grid">
-      <div class="case-item reveal">
-        <div class="case-overlay">
-          <p class="label">E-Commerce</p>
-          <h3>Project Hyperion</h3>
-        </div>
-      </div>
-      <div class="case-item reveal">
-        <div class="case-overlay">
-          <p class="label">SaaS</p>
-          <h3>Velocity AI</h3>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="process">
-    <span class="label">Methodology</span>
-    <h2 class="section-title">How We Scale</h2>
-    <div class="process-row">
-      <div class="reveal">
-        <div class="step-num">01</div>
-        <h4>Audit</h4>
-        <p>Deep dive into your current data and bottlenecks.</p>
-      </div>
-      <div class="reveal">
-        <div class="step-num">02</div>
-        <h4>Architecture</h4>
-        <p>Building your custom AI marketing engine.</p>
-      </div>
-      <div class="reveal">
-        <div class="step-num">03</div>
-        <h4>Activation</h4>
-        <p>Phase one deployment and live testing.</p>
-      </div>
-      <div class="reveal">
-        <div class="step-num">04</div>
-        <h4>Optimization</h4>
-        <p>24/7 algorithmic scaling for peak performance.</p>
+      <div class="card">
+        <h3>0x03</h3>
+        <p>SYNTHETIC_SCALING</p>
       </div>
     </div>
   </section>
 
   <section id="contact">
-    <div class="contact-container">
-      <div>
-        <span class="label">Connect</span>
-        <h2 class="section-title">Ready to<br>Automate?</h2>
-        <p style="color: var(--muted);">Available for global partnerships starting Q3 2026.</p>
-      </div>
-      <form class="reveal">
-        <input type="text" placeholder="FULL NAME" required>
-        <input type="email" placeholder="EMAIL ADDRESS" required>
-        <textarea rows="4" placeholder="TELL US ABOUT YOUR GOALS"></textarea>
-        <button type="submit" class="submit-btn">Send Message</button>
-      </form>
+    <h2 class="section-title" style="background: var(--glitch-red);">SEND_SIGNAL</h2>
+    <div class="contact-wrap">
+      <input type="text" value="ANONYMOUS_USER_01">
+      <input type="text" placeholder="ENCRYPTED_MESSAGE">
+      <button style="background: var(--accent); padding: 20px; border: none; font-weight: bold;">UPLOADING...</button>
     </div>
   </section>
 
   <script>
-    // Navbar scroll effect
-    window.addEventListener('scroll', () => {
-      const nav = document.getElementById('navbar');
-      if (window.scrollY > 50) nav.classList.add('scrolled');
-      else nav.classList.remove('scrolled');
+    // Mouse interaction - slightly moving the header based on cursor
+    const header = document.querySelector('.glitch-header');
+    document.addEventListener('mousemove', (e) => {
+        const x = (window.innerWidth / 2 - e.pageX) / 30;
+        const y = (window.innerHeight / 2 - e.pageY) / 30;
+        header.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
     });
 
-    // Reveal animation observer
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    // Randomly change card colors to simulate flickering
+    setInterval(() => {
+        const cards = document.querySelectorAll('.card');
+        const randomCard = cards[Math.floor(Math.random() * cards.length)];
+        randomCard.style.borderColor = Math.random() > 0.5 ? '#ff003c' : '#ffffff';
+    }, 500);
   </script>
 </body>
 </html>
