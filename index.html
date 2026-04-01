@@ -5,152 +5,77 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>NEXUS — AI Marketing Agency</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
   <style>
+    /* RESET & VARIABLES */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     :root {
       --bg: #080808;
       --surface: #111111;
-      --border: rgba(255,255,255,0.08);
+      --border: rgba(255,255,255,0.1);
       --accent: #C8FF00;
-      --accent2: #FF3C5F;
       --text: #F0EDE6;
-      --muted: rgba(240,237,230,0.45);
+      --muted: rgba(240,237,230,0.5);
       --font-display: 'Bebas Neue', sans-serif;
       --font-body: 'DM Sans', sans-serif;
       --font-mono: 'Space Mono', monospace;
     }
 
+    html { scroll-behavior: smooth; }
     body {
-      background-color: var(--bg);
+      background: var(--bg);
       color: var(--text);
       font-family: var(--font-body);
-      line-height: 1.5;
       overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
     }
 
-    /* CURSOR */
-    #cursor {
-      position: fixed;
-      width: 20px;
-      height: 20px;
-      border: 1px solid var(--accent);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transition: transform 0.1s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    #cursor::after {
-      content: '';
-      width: 4px;
-      height: 4px;
-      background: var(--accent);
-      border-radius: 50%;
+    /* CUSTOM CURSOR */
+    .cursor-ring {
+      position: fixed; width: 30px; height: 30px; border: 1.5px solid var(--accent);
+      border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%);
+      transition: width 0.3s, height 0.3s, opacity 0.3s; opacity: 0.5;
     }
 
-    /* NAVIGATION */
+    /* NAV */
     nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 2rem 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
-      transition: all 0.4s ease;
+      position: fixed; top: 0; width: 100%; z-index: 1000;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 30px 5%; transition: all 0.4s;
     }
     nav.scrolled {
-      padding: 1rem 5%;
-      background: rgba(8,8,8,0.8);
-      backdrop-filter: blur(10px);
+      padding: 15px 5%; background: rgba(8,8,8,0.9); backdrop-filter: blur(15px);
       border-bottom: 1px solid var(--border);
     }
-    .logo {
-      font-family: var(--font-display);
-      font-size: 2rem;
-      letter-spacing: 2px;
-      color: var(--accent);
-      text-decoration: none;
-    }
-    .nav-links a {
-      color: var(--text);
-      text-decoration: none;
-      margin-left: 2.5rem;
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: color 0.3s ease;
+    .logo { font-family: var(--font-display); font-size: 2rem; color: var(--text); text-decoration: none; letter-spacing: 2px; }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 40px; }
+    .nav-links a { 
+      font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; transition: 0.3s;
     }
     .nav-links a:hover { color: var(--accent); }
 
-    /* HERO SECTION */
+    /* HERO & ANIMATION */
     .hero {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 0 5%;
-      position: relative;
-      overflow: hidden;
+      min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+      padding: 0 5%; position: relative;
     }
+    .hero-tag {
+      font-family: var(--font-mono); color: var(--accent); font-size: 0.7rem;
+      text-transform: uppercase; margin-bottom: 2rem; display: flex; align-items: center; gap: 10px;
+    }
+    .hero-tag::before { content: ''; width: 30px; height: 1px; background: var(--accent); }
 
-    .hero-bg-blobs {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      z-index: -1;
-      filter: blur(80px);
-      opacity: 0.4;
+    .hero-headline {
+      font-family: var(--font-display); font-size: clamp(4rem, 10vw, 9rem);
+      line-height: 0.9; margin-bottom: 3rem;
     }
-    .blob {
-      position: absolute;
-      width: 40vw;
-      height: 40vw;
-      border-radius: 50%;
-    }
-    .blob-1 { background: var(--accent); top: -10%; left: -10%; animation: float 20s infinite alternate; }
-    .blob-2 { background: var(--accent2); bottom: -10%; right: -10%; animation: float 25s infinite alternate-reverse; }
-
-    @keyframes float {
-      0% { transform: translate(0, 0) rotate(0deg); }
-      100% { transform: translate(10%, 10%) rotate(15deg); }
-    }
-
-    /* TEXT CAROUSEL ANIMATION (Say It Nicely Style) */
-    .hero h1 {
-      font-family: var(--font-display);
-      font-size: clamp(4rem, 10vw, 8rem);
-      line-height: 0.9;
-      text-transform: uppercase;
-      display: flex;
-      flex-direction: column;
-    }
-
     .carousel-container {
-      height: 1.1em; /* Matches line height of text */
-      overflow: hidden;
-      display: inline-block;
-      position: relative;
-      color: var(--accent);
+      height: 1.1em; overflow: hidden; display: inline-block; vertical-align: top; color: var(--accent);
     }
-
-    .carousel-list {
-      display: flex;
-      flex-direction: column;
-      animation: rotateText 10s cubic-bezier(0.76, 0, 0.24, 1) infinite;
-    }
-
-    .carousel-item {
-      height: 1.1em;
-      display: flex;
-      align-items: center;
-    }
+    .carousel-list { animation: rotateText 10s cubic-bezier(0.76, 0, 0.24, 1) infinite; }
+    .carousel-item { height: 1.1em; display: flex; align-items: center; }
 
     @keyframes rotateText {
       0%, 15% { transform: translateY(0); }
@@ -161,97 +86,63 @@
       100% { transform: translateY(-5.5em); }
     }
 
-    .hero p {
-      max-width: 500px;
-      margin-top: 2rem;
-      color: var(--muted);
-      font-size: 1.1rem;
-    }
+    .hero-bottom { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 2rem; }
+    .hero-desc { max-width: 400px; color: var(--muted); font-size: 1.1rem; }
 
-    .cta-row {
-      margin-top: 3rem;
-      display: flex;
-      gap: 2rem;
-      align-items: center;
+    /* BUTTONS */
+    .btn {
+      padding: 18px 35px; font-family: var(--font-mono); font-size: 0.8rem;
+      text-transform: uppercase; font-weight: 700; text-decoration: none; transition: 0.3s;
     }
-    .btn-primary {
-      background: var(--accent);
-      color: #000;
-      padding: 1.2rem 2.5rem;
-      text-decoration: none;
-      font-weight: 700;
-      font-family: var(--font-mono);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: all 0.3s ease;
-      border: 1px solid var(--accent);
-    }
+    .btn-primary { background: var(--accent); color: #000; border: 1px solid var(--accent); }
     .btn-primary:hover { background: transparent; color: var(--accent); }
 
-    /* SERVICES */
-    .services { padding: 10rem 5%; }
-    .section-tag {
-      font-family: var(--font-mono);
-      color: var(--accent);
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-      display: block;
-    }
+    /* SERVICES GRID */
+    .section { padding: 120px 5%; }
     .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-top: 4rem;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+      background: var(--border); margin-top: 60px;
     }
     .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 3rem;
-      transition: all 0.4s ease;
-      position: relative;
-      overflow: hidden;
+      background: var(--bg); padding: 50px; transition: 0.4s;
     }
-    .card:hover { border-color: var(--accent); transform: translateY(-10px); }
+    .card:hover { background: #111; }
     .card h3 { font-family: var(--font-display); font-size: 2rem; margin-bottom: 1rem; }
-    .card p { color: var(--muted); }
+    .card p { color: var(--muted); font-size: 0.95rem; }
 
     /* REVEAL ANIMATION */
-    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+    .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* FOOTER */
-    footer {
-      padding: 5rem 5%;
-      border-top: 1px solid var(--border);
-      text-align: center;
-      font-family: var(--font-mono);
-      color: var(--muted);
-      font-size: 0.7rem;
+    @media (max-width: 1024px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 640px) {
+      .grid { grid-template-columns: 1fr; }
+      .hero-headline { font-size: 4rem; }
     }
   </style>
 </head>
 <body>
 
-  <div id="cursor"></div>
+  <div class="cursor-ring" id="cursor"></div>
 
   <nav id="navbar">
-    <a href="#" class="logo">NEXUS</a>
+    <a href="#" class="logo">NEX<span>U</span>S</a>
     <div class="nav-links">
       <a href="#services">Services</a>
-      <a href="#work">Work</a>
+      <a href="#work">Case Studies</a>
+      <a href="#process">Process</a>
       <a href="#contact">Contact</a>
     </div>
+    <a href="#contact" class="btn" style="padding: 10px 20px; font-size: 0.7rem; background: var(--accent); color: #000;">Inquiry</a>
   </nav>
 
   <section class="hero">
-    <div class="hero-bg-blobs">
-      <div class="blob blob-1"></div>
-      <div class="blob blob-2"></div>
-    </div>
-    
-    <h1 class="reveal">
-      <span>WE SCALE</span>
+    <div class="hero-tag reveal">AI-First Creative Tech</div>
+    <h1 class="hero-headline reveal">
+      WE SCALE<br>
       <div class="carousel-container">
         <div class="carousel-list">
           <div class="carousel-item">BRANDS</div>
@@ -263,18 +154,15 @@
         </div>
       </div>
     </h1>
-
-    <p class="reveal">An AI-first creative powerhouse engineered to automate growth and dominate the digital landscape.</p>
-    
-    <div class="cta-row reveal">
-      <a href="#contact" class="btn-primary">Start a Project</a>
+    <div class="hero-bottom reveal">
+      <p class="hero-desc">We deploy AI-powered strategies that eliminate guesswork and turn your brand into a conversion machine.</p>
+      <a href="#work" class="btn btn-primary">See Our Work</a>
     </div>
   </section>
 
-  <section id="services" class="services">
-    <span class="section-tag reveal">Capabilities</span>
-    <h2 class="reveal" style="font-family: var(--font-display); font-size: 4rem;">Integrated AI Solutions</h2>
-    
+  <section id="services" class="section">
+    <div class="hero-tag reveal">Capabilities</div>
+    <h2 class="hero-headline reveal" style="font-size: 4rem;">Integrated Systems</h2>
     <div class="grid">
       <div class="card reveal">
         <h3>Predictive Ads</h3>
@@ -286,44 +174,34 @@
       </div>
       <div class="card reveal">
         <h3>Auto-Scaling</h3>
-        <p>AI agents that manage your budget 24/7, shifting capital to the highest-performing channels.</p>
+        <p>AI agents that manage your budget 24/7, shifting capital to high-performing channels.</p>
       </div>
     </div>
   </section>
 
-  <footer>
-    &copy; 2026 NEXUS CREATIVE TECH. ALL RIGHTS RESERVED.
-  </footer>
-
   <script>
-    // CUSTOM CURSOR
+    // Cursor following
     const cursor = document.getElementById('cursor');
     document.addEventListener('mousemove', (e) => {
       cursor.style.left = e.clientX + 'px';
       cursor.style.top = e.clientY + 'px';
     });
 
-    // NAV SCROLL EFFECT
-    const navbar = document.getElementById('navbar');
+    // Navbar scroll effect
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 50) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
     });
 
-    // REVEAL ON SCROLL
-    const reveals = document.querySelectorAll('.reveal');
+    // Intersection Observer for scroll animations
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
+        if (entry.isIntersecting) entry.target.classList.add('visible');
       });
     }, { threshold: 0.1 });
 
-    reveals.forEach(el => observer.observe(el));
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   </script>
 </body>
 </html>
